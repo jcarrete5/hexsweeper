@@ -2,7 +2,7 @@ var cells = [];
 var cellSize = 15;
 var cellOffset = cellSize * 2;
 var qBasis, rBasis;
-var w = 21, h = 25, numMines = 100;
+var w = 21, h = 25, numMines = 20;
 var qMin, qMax, rMin, rMax;
 
 var imageSize = 10;
@@ -15,6 +15,7 @@ function preload() {
 	assets[4] = loadImage("assets/4.png");
 	assets[5] = loadImage("assets/5.png");
 	assets[6] = loadImage("assets/6.png");
+	assets[8] = loadImage("assets/flag.png");
 	assets[9] = loadImage("assets/mine.png");
 }
 
@@ -25,6 +26,30 @@ function setup() {
 	createCanvas(600, 600);
 
 	generateField();
+}
+
+function draw() {
+	background(51);
+	var axial = screenToAxial(mouseX, mouseY);
+	var notRevealed = 0;
+	for(var i = 0; i < cells.length; i++) {
+		// Highlight cells on mouse hover if they aren't already revealed
+		if(!cells[i].revealed) {
+			notRevealed++;
+			if(cells[i].r === axial.r && cells[i].q === axial.q) {
+				cells[i].c = 200;
+			} else {
+				cells[i].c = 127;
+			}
+		}
+
+		cells[i].draw();
+	}
+
+	if(notRevealed === numMines) { // Win
+		alert("You Won");
+		resetGame();
+	}
 }
 
 function generateField() {
@@ -61,29 +86,29 @@ function generateField() {
 	}
 }
 
-function draw() {
-	background(51);
-	var axial = screenToAxial(mouseX, mouseY);
-	for(var i = 0; i < cells.length; i++) {
-		// Highlight cells on mouse hover if they aren't already revealed
-		if(!cells[i].revealed) {
-			if(cells[i].r === axial.r && cells[i].q === axial.q) {
-				cells[i].c = 200;
-			} else {
-				cells[i].c = 127;
-			}
-		}
-
-		cells[i].draw();
-	}
-}
-
 function mouseReleased() {
 	var index = axialToIndex(screenToAxial(mouseX, mouseY));
 	// console.log(index);
-	if(index !== undefined) {
-		cells[index].reveal();
+	if(index === undefined) return;
+
+	if(mouseButton === LEFT) {
+		if(keyIsPressed && keyCode === SHIFT) {
+			if(!cells[index].revealed){
+				cells[index].flagged = !cells[index].flagged;
+			}
+			return;
+		}
+
+		if(!cells[index].flagged) {
+			cells[index].reveal();
+		}
+
+		if(cells[index].type === 9) { // Lose
+			alert("Game Over");
+			resetGame();
+		}
 	}
+
 }
 
 function screenToAxial(mx, my) {

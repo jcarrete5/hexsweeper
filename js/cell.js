@@ -14,6 +14,7 @@ function Cell(q, r) {
 	this.c = 127;
 	this.center = qBasis.copy().mult(this.q).add(rBasis.copy().mult(this.r));
 	this.revealed = false;
+	this.flagged = false;
 	this.type = 0;
 
 	this.draw = function() {
@@ -27,10 +28,14 @@ function Cell(q, r) {
 		}
 		endShape(CLOSE);
 
+		var imgX = this.center.x + cellOffset - imageSize / 2;
+		var imgY = this.center.y + cellOffset - imageSize / 2;
 		if(this.revealed && this.type !== 0) {
-			var x = this.center.x + cellOffset - imageSize / 2;
-			var y = this.center.y + cellOffset - imageSize / 2;
-			image(assets[this.type], x, y, imageSize, imageSize);
+			image(assets[this.type], imgX, imgY, imageSize, imageSize);
+		}
+
+		if(this.flagged) {
+			image(assets[8], imgX, imgY, imageSize, imageSize);
 		}
 	}
 
@@ -38,7 +43,7 @@ function Cell(q, r) {
 		var nOffset = neighborMap[dir];
 		var axial = {q: this.q + nOffset.q, r: this.r + nOffset.r};
 		var index;
-		if(index = axialToIndex(axial)) {
+		if((index = axialToIndex(axial)) !== undefined) {
 			return cells[index];
 		} else {
 			return undefined;
@@ -49,7 +54,7 @@ function Cell(q, r) {
 		if(this.revealed) return;
 		this.revealed = true;
 		this.c = 200;
-		if(this.type == 0) {
+		if(this.type === 0) {
 			for(var j = 0; j < neighborMap.length; j++) {
 				var neighbor = this.neighbor(j);
 				if(neighbor) {
