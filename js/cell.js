@@ -53,7 +53,11 @@ function Cell(q, r) {
 	this.reveal = function() {
 		if(this.revealed) return;
 		this.revealed = true;
-		this.c = 200;
+		if(this.type === 9) {
+			this.c = color(255, 50, 50);
+		} else {
+			this.c = 200;
+		}
 		if(this.type === 0) {
 			for(var j = 0; j < neighborMap.length; j++) {
 				var neighbor = this.neighbor(j);

@@ -46,10 +46,25 @@ function draw() {
 		cells[i].draw();
 	}
 
-	if(notRevealed === numMines) { // Win
-		alert("You Won");
-		resetGame();
+	if(notRevealed === numMines) { // Win *************
+		onWin();
 	}
+}
+
+function onWin() {
+	for(var i = 0; i < cells.length; i++) {
+		cells[i].flagged = false;
+		cells[i].reveal();
+	}
+	alert("You Won");
+}
+
+function onLose() {
+	for(var i = 0; i < cells.length; i++) {
+		cells[i].flagged = false;
+		cells[i].reveal();
+	}
+	alert("Game Over");
 }
 
 function generateField() {
@@ -103,9 +118,8 @@ function mouseReleased() {
 			cells[index].reveal();
 		}
 
-		if(cells[index].type === 9) { // Lose
-			alert("Game Over");
-			resetGame();
+		if(cells[index].type === 9) { // Lose ****************
+			onLose();
 		}
 	}
 
