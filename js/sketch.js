@@ -2,7 +2,7 @@ var cells = [];
 var cellSize = 15;
 var cellOffset = cellSize * 2;
 var qBasis, rBasis;
-var w = 21, h = 25, numMines = 20;
+var w = 10, h = 10, numMines = 10;
 var qMin, qMax, rMin, rMax;
 
 var imageSize = 10;
@@ -177,5 +177,22 @@ function qRange(r) {
 function resetGame() {
 	// Reset the game
 	console.log("Resetting...");
+	switch(document.getElementById("difficulty").value) {
+		case "easy":
+			w = 10;
+			h = 10;
+			numMines = 10;
+			break;
+		case "medium":
+			w = 20;
+			h = 10;
+			numMines = 35;
+			break;
+		case "hard":
+			w = 21;
+			h = 25;
+			numMines = 120;
+			break;
+	}
 	generateField();
 }
