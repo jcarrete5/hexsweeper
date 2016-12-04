@@ -20,7 +20,7 @@ function Cell(q, r) {
 		fill(this.c);
 		stroke(0);
 		beginShape();
-		for(var i = 0; i < 6; i++) {
+		for(var i = 0; i < neighborMap.length; i++) {
 			var angle = (PI/3) * i + PI/6;
 			vertex(cellOffset + this.center.x + cellSize * cos(angle), cellOffset + this.center.y + cellSize * sin(angle));
 		}
@@ -66,7 +66,16 @@ function Cell(q, r) {
 	}
 
 	this.reveal = function() {
+		if(this.revealed) return;
 		this.revealed = true;
-		
+		this.c = 200;
+		if(this.type == 0) {
+			for(var j = 0; j < neighborMap.length; j++) {
+				var neighbor = this.neighbor(j);
+				if(neighbor) {
+					neighbor.reveal();
+				}
+			}
+		}
 	}
 }
