@@ -8,6 +8,8 @@ var qMin, qMax, rMin, rMax;
 var imageSize = 10;
 var assets = {}
 
+var timer, time, flagsLeft = numMines;
+
 function preload() {
 	assets[1] = loadImage("assets/1.png");
 	assets[2] = loadImage("assets/2.png");
@@ -26,9 +28,25 @@ function setup() {
 	createCanvas(600, 600);
 
 	generateField();
+	time = Date.now();
+	timer = 0;
 }
 
 function draw() {
+	//Update timer
+	var deltaTime = Date.now() - time;
+	time = Date.now();
+	timer += deltaTime;
+	var curTime = new Date(timer);
+	var str = String("00" + curTime.getUTCHours()).slice(-2);
+	str += ":" + String("00" + curTime.getUTCMinutes()).slice(-2);
+	str += ":" + String("00" + curTime.getUTCSeconds()).slice(-2);
+	document.getElementById("timer").textContent = str;
+
+	// Update flags
+	document.getElementById("flags").textContent = "Flags: " +flagsLeft;
+
+
 	background(51);
 	var axial = screenToAxial(mouseX, mouseY);
 	var notRevealed = 0;
@@ -110,6 +128,11 @@ function mouseReleased() {
 		if(keyIsPressed && keyCode === SHIFT) {
 			if(!cells[index].revealed){
 				cells[index].flagged = !cells[index].flagged;
+				if(cells[index].flagged) {
+					flagsLeft--;
+				} else {
+					flagsLeft++;
+				}
 			}
 			return;
 		}
@@ -194,5 +217,6 @@ function resetGame() {
 			numMines = 120;
 			break;
 	}
+	timer = 0;
 	generateField();
 }
