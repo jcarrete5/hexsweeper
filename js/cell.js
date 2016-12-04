@@ -19,6 +19,7 @@ function Cell(q, r) {
 	this.draw = function() {
 		fill(this.c);
 		stroke(0);
+
 		beginShape();
 		for(var i = 0; i < neighborMap.length; i++) {
 			var angle = (PI/3) * i + PI/6;
@@ -26,31 +27,10 @@ function Cell(q, r) {
 		}
 		endShape(CLOSE);
 
-		if(this.revealed) {
-			var offset = imageSize / 2 - cellOffset;
-			switch(this.type) {
-				case 1:
-					image(assets.one, this.center.x - offset, this.center.y - offset, imageSize, imageSize);
-					break;
-				case 2:
-					image(assets.two, this.center.x - offset, this.center.y - offset, imageSize, imageSize);
-					break;
-				case 3:
-					image(assets.three, this.center.x - offset, this.center.y - offset, imageSize, imageSize);
-					break;
-				case 4:
-					image(assets.four, this.center.x - offset, this.center.y - offset, imageSize, imageSize);
-					break;
-				case 5:
-					image(assets.five, this.center.x - offset, this.center.y - offset, imageSize, imageSize);
-					break;
-				case 6:
-					image(assets.six, this.center.x - offset, this.center.y - offset, imageSize, imageSize);
-					break;
-				case 9:
-					image(assets.mine, this.center.x - offset, this.center.y - offset, imageSize, imageSize);
-					break;
-			}
+		if(this.revealed && this.type !== 0) {
+			var x = this.center.x + cellOffset - imageSize / 2;
+			var y = this.center.y + cellOffset - imageSize / 2;
+			image(assets[this.type], x, y, imageSize, imageSize);
 		}
 	}
 
@@ -59,7 +39,7 @@ function Cell(q, r) {
 		var axial = {q: this.q + nOffset.q, r: this.r + nOffset.r};
 		var index;
 		if(index = axialToIndex(axial)) {
-			return cells[axialToIndex(axial)];
+			return cells[index];
 		} else {
 			return undefined;
 		}

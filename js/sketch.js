@@ -9,13 +9,13 @@ var imageSize = 10;
 var assets = {}
 
 function preload() {
-	assets.one = loadImage("assets/1.png");
-	assets.two = loadImage("assets/2.png");
-	assets.three = loadImage("assets/3.png");
-	assets.four = loadImage("assets/4.png");
-	assets.five = loadImage("assets/5.png");
-	assets.six = loadImage("assets/6.png");
-	assets.mine = loadImage("assets/mine.png");
+	assets[1] = loadImage("assets/1.png");
+	assets[2] = loadImage("assets/2.png");
+	assets[3] = loadImage("assets/3.png");
+	assets[4] = loadImage("assets/4.png");
+	assets[5] = loadImage("assets/5.png");
+	assets[6] = loadImage("assets/6.png");
+	assets[9] = loadImage("assets/mine.png");
 }
 
 function setup() {
@@ -63,10 +63,13 @@ function draw() {
 	background(51);
 	var axial = screenToAxial(mouseX, mouseY);
 	for(var i = 0; i < cells.length; i++) {
-		if(cells[i].r === axial.r && cells[i].q === axial.q) {
-			cells[i].c = 200;
-		} else if(!cells[i].revealed) {
-			cells[i].c = 127;
+		// Highlight cells on mouse hover if they aren't already revealed
+		if(!cells[i].revealed) {
+			if(cells[i].r === axial.r && cells[i].q === axial.q) {
+				cells[i].c = 200;
+			} else {
+				cells[i].c = 127;
+			}
 		}
 
 		cells[i].draw();
@@ -75,7 +78,7 @@ function draw() {
 
 function mouseReleased() {
 	var index = axialToIndex(screenToAxial(mouseX, mouseY));
-	console.log(index);
+	// console.log(index);
 	if(index !== undefined) {
 		cells[index].reveal();
 	}
@@ -127,7 +130,7 @@ function axialToIndex(axial) {
 
 // Returns the max & min 'q' for a given row
 function qRange(r) {
-	return {min:-floor(r / 2), max:w - floor(r / 2) - 1};
+	return {min: -floor(r / 2), max: w - floor(r / 2) - 1};
 }
 
 function resetGame() {
