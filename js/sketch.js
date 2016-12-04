@@ -24,16 +24,18 @@ function setup() {
 
 	createCanvas(600, 600);
 
+	generateField();
+}
+
+function generateField() {
 	// Populate list
+	cells = [];
 	for(var r = 0; r < h; r++) {
 		for(var q = qRange(r).min; q <= qRange(r).max; q++) {
 			cells.push(new Cell(q, r));
 		}
 	}
-	generateField();
-}
 
-function generateField() {
 	var randList = []
 	for(var i = 0; i < cells.length; i++) {
 		randList[i] = i;
