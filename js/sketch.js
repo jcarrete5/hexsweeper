@@ -44,7 +44,7 @@ function draw() {
 	document.getElementById("timer").textContent = str;
 
 	// Update flags
-	document.getElementById("flags").textContent = "Flags: " +flagsLeft;
+	document.getElementById("flags").textContent = "Flags: " + flagsLeft;
 
 
 	background(51);
@@ -137,15 +137,16 @@ function mouseReleased() {
 			return;
 		}
 
-		if(!cells[index].flagged) {
-			cells[index].reveal();
-		}
+		if(!cells[index].revealed) {
+			if(!cells[index].flagged) {
+				cells[index].reveal();
+			}
 
-		if(cells[index].type === 9) { // Lose ****************
-			onLose();
+			if(cells[index].type === 9) { // Lose ****************
+				onLose();
+			}
 		}
 	}
-
 }
 
 function screenToAxial(mx, my) {
@@ -218,5 +219,6 @@ function resetGame() {
 			break;
 	}
 	timer = 0;
+	flagsLeft = numMines;
 	generateField();
 }
