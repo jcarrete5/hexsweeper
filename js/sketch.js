@@ -140,10 +140,9 @@ function mouseReleased() {
 		if(!cells[index].revealed) {
 			if(!cells[index].flagged) {
 				cells[index].reveal();
-			}
-
-			if(cells[index].type === 9) { // Lose ****************
-				onLose();
+				if(cells[index].type === 9) { // Lose ****************
+					onLose();
+				}
 			}
 		}
 	}
