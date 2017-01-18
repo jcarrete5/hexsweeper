@@ -25,7 +25,8 @@ function setup() {
 	qBasis = createVector(cellSize * sqrt(3), 0);
 	rBasis = createVector(cellSize * sqrt(3)/2, cellSize * 3/2);
 
-	createCanvas(600, 600);
+	var cnv = createCanvas(600, 600);
+	cnv.parent("hexsweeper");
 
 	generateField();
 	time = Date.now();
