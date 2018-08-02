@@ -1,16 +1,20 @@
+{% extends 'base.html' %}
 
+{% block title %}Hexsweeper{% endblock %}
 
+{% block main_content %}
 <div class="game" id="hexsweeper">
-	<p id="timer">00:00:00</p>
-	<p id="flags"></p>
-	<button onclick="resetGame()">Reset</button>
-	<select id="difficulty" title="Difficulty">
-		<option value="easy">Easy</option>
-		<option value="medium">Medium</option>
-		<option value="hard">Hard</option>
-	</select>
-	<br/>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/p5.min.js"></script>
-	<script src="js/cell.js"></script>
-	<script src="js/sketch.js"></script>
+  <p id="timer">00:00:00</p>
+  <p id="flags"></p>
+  <button onclick="resetGame();">Reset</button>
+  <select id="difficulty" title="Difficulty">
+    <option value="easy">Easy</option>
+    <option value="medium">Medium</option>
+    <option value="hard">Hard</option>
+  </select>
+  <br/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/p5.min.js"></script>
+  <script src="{{ url_for('static', filename='js/hexsweeper/cell.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/hexsweeper/sketch.js') }}"></script>
 </div>
+{% endblock %}
