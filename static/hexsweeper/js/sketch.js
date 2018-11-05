@@ -11,14 +11,14 @@ var assets = {}
 var timer, time, flagsLeft = numMines;
 
 function preload() {
-	assets[1] = loadImage("assets/1.png");
-	assets[2] = loadImage("assets/2.png");
-	assets[3] = loadImage("assets/3.png");
-	assets[4] = loadImage("assets/4.png");
-	assets[5] = loadImage("assets/5.png");
-	assets[6] = loadImage("assets/6.png");
-	assets[8] = loadImage("assets/flag.png");
-	assets[9] = loadImage("assets/mine.png");
+	assets[1] = loadImage("../img/1.png");
+	assets[2] = loadImage("../img/2.png");
+	assets[3] = loadImage("../img/3.png");
+	assets[4] = loadImage("../img/4.png");
+	assets[5] = loadImage("../img/5.png");
+	assets[6] = loadImage("../img/6.png");
+	assets[8] = loadImage("../img/flag.png");
+	assets[9] = loadImage("../img/mine.png");
 }
 
 function setup() {

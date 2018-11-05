@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Hexsweeper{% endblock %}
+{% block header %}{% block title %}Hexsweeper{% endblock %}{% endblock %}
 
 {% block main_content %}
 <div class="game" id="hexsweeper">
@@ -14,7 +14,7 @@
   </select>
   <br/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/p5.min.js"></script>
-  <script src="{{ url_for('static', filename='js/hexsweeper/cell.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/hexsweeper/sketch.js') }}"></script>
+  <script src="{{ url_for('static', filename='apps/hexsweeper/js/cell.js') }}"></script>
+  <script src="{{ url_for('static', filename='apps/hexsweeper/js/sketch.js') }}"></script>
 </div>
 {% endblock %}
